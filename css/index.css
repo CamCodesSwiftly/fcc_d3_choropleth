@@ -1,0 +1,33 @@
+h1 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+}
+
+#test {
+  width: 50px;
+  height: 50px;
+  background-color: #90ee90;
+}
+
+#test-lighter {
+  width: 50px;
+  height: 50px;
+  background-color: #a6f1a6;
+}
+
+#test-evenlighter {
+  width: 50px;
+  height: 50px;
+  background-color: #bcf5bc;
+}
+
+#test-lightest {
+  width: 50px;
+  height: 50px;
+  background-color: #e8fce8;
+}/*# sourceMappingURL=index.css.map */
