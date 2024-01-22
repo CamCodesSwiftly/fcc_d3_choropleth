@@ -20,18 +20,13 @@ const projection = d3
 // Create a path generator
 const path = d3.geoPath().projection(projection);
 
-// fetch(
-// 	"https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json"
-// )
 fetch(
-	"https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson"
+	"https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json"
 )
 	.then((response) => response.json())
-	.then((world) => {
+	.then((educationData) => {
 		// Handle data from the first JSON file
-		console.log(world);
-		// educationData = [...educationTJSON];
-
+		console.log("Education:", educationData);
 		// Fetch the second JSON file
 		return fetch(
 			"https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/counties.json"
@@ -44,11 +39,18 @@ fetch(
 		const countiesTJSON = usTJSON.objects.counties;
 		const statesTJSON = usTJSON.objects.states;
 		const nationTJSON = usTJSON.objects.nation;
+		console.log("TopoJSON:", usTJSON);
 
 		// GEOJSON DATA
 		const countiesGJSON = topojson.feature(usTJSON, countiesTJSON).features;
 		const statesGJSON = topojson.feature(usTJSON, statesTJSON).features;
 		const nationGJSON = topojson.feature(usTJSON, nationTJSON).features[0];
+		console.log("GeoJSON counties:", countiesGJSON);
+		console.log("GeoJSON states:", statesGJSON);
+		console.log("GeoJSON nation:", nationGJSON);
+
+		// This link will lead to the solution:
+		// https://observablehq.com/@d3/choropleth
 	})
 	.catch((error) => {
 		// Handle errors
