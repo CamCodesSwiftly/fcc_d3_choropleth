@@ -1,24 +1,26 @@
+import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
 const body = document.querySelector("body");
+
 let educationData = [];
-// Define the width and height of the SVG canvas
-const width = 960;
-const height = 600;
+// // Define the width and height of the SVG canvas
+// const width = 960;
+// const height = 600;
 
-// Create an SVG container
-const svg = d3
-	.select("body") // You can select another container if needed
-	.append("svg")
-	.attr("width", width)
-	.attr("height", height);
+// // Create an SVG container
+// const svg = d3
+// 	.select("body") // You can select another container if needed
+// 	.append("svg")
+// 	.attr("width", width)
+// 	.attr("height", height);
 
-// Choose a suitable projection (e.g., Albers USA)
-const projection = d3
-	.geoAlbersUsa()
-	.translate([width / 2, height / 2])
-	.scale(1000);
+// // Choose a suitable projection (e.g., Albers USA)
+// const projection = d3
+// 	.geoAlbersUsa()
+// 	.translate([width / 2, height / 2])
+// 	.scale(1000);
 
-// Create a path generator
-const path = d3.geoPath().projection(projection);
+// // Create a path generator
+// const path = d3.geoPath().projection(projection);
 
 fetch(
 	"https://cdn.freecodecamp.org/testable-projects-fcc/data/choropleth_map/for_user_education.json"
@@ -50,7 +52,27 @@ fetch(
 		console.log("GeoJSON nation:", nationGJSON);
 
 		// This link will lead to the solution:
-		// https://observablehq.com/@d3/choropleth
+		// https://observablehq.com/@d3/choropleth/2?intent=fork
+
+		//lets plot
+		const plot = Plot.plot({
+			projection: "albers-usa",
+			color: {
+				type: "quantile",
+				n: 9,
+				scheme: "blues",
+				label: "Education (%)",
+				legend: true,
+			},
+			marks: [
+				Plot.geo(counties, {
+					fill: (d) => d.properties.bachelorOrHigher,
+					title: (d) =>
+						`${d.properties.countyName}, ${d.properties.statenNameAbgekuerzt}: ${d.properties.bachelorOrHigher}`,
+				}),
+			],
+		});
+		body.append(plot);
 	})
 	.catch((error) => {
 		// Handle errors
