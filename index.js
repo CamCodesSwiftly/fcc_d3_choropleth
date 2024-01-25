@@ -216,12 +216,12 @@ fetch(
 		const nationTJSON = usTJSON.objects.nation;
 
 		// CONVERT TO GEOJSON DATA
-		let countiesGJSON = topojson.feature(usTJSON, countiesTJSON);
+		let countiesGJSON = topojson.feature(usTJSON, countiesTJSON).features;
 		const statesGJSON = topojson.feature(usTJSON, statesTJSON).features;
 		const nationGJSON = topojson.feature(usTJSON, nationTJSON).features[0];
 
 		// Merge ALL Education Data with County Data
-		for (const countyElement of countiesGJSON.features) {
+		for (const countyElement of countiesGJSON) {
 			//Find corresponding edu object
 			const correspondingElement = educationData.find(
 				(educationElement) => educationElement.fips == countyElement.id
@@ -258,10 +258,22 @@ fetch(
 				Legend(color, { title: "Education rate (%)", width: 260 })
 			);
 		// TODO: Plot counties and tooltip
-
+		svg.append("g")
+			.selectAll("path")
+			.data(countiesGJSON)
+			.join("path")
+			.attr("fill", (d) => color(d.properties.bachelorsOrHigher))
+			.attr("d", path)
+			.append("title")
+			// ! Tooltips are not working
+			.text(
+				(d) =>
+					`${d.properties.area_name}, ${d.properties.state}, ${d.properties.bachelorsOrHigher}%`
+			);
 		// TODO: Plot statemesh
 
 		// ? CONSOLE LOG AREA
+		console.log(countiesGJSON[32]);
 	})
 	.catch((error) => {
 		// Handle errors
