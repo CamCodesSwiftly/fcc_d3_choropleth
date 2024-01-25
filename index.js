@@ -217,7 +217,7 @@ fetch(
 
 		// CONVERT TO GEOJSON DATA
 		let countiesGJSON = topojson.feature(usTJSON, countiesTJSON).features;
-		const statesGJSON = topojson.feature(usTJSON, statesTJSON).features;
+		const statesGJSON = topojson.feature(usTJSON, statesTJSON);
 		const nationGJSON = topojson.feature(usTJSON, nationTJSON).features[0];
 
 		// Merge ALL Education Data with County Data
@@ -271,7 +271,14 @@ fetch(
 					`${d.properties.area_name}, ${d.properties.state}, ${d.properties.bachelorsOrHigher}%`
 			);
 		// TODO: Plot statemesh
+		svg.append("path")
+			.datum(topojson.mesh(usTJSON, usTJSON.objects.states, (a, b) => a !== b))
+			.attr("fill", "none")
+			.attr("stroke", "white")
+			.attr("stroke-linejoin", "round")
+			.attr("d", path);
 
+			
 		// ? CONSOLE LOG AREA
 		console.log(countiesGJSON[32]);
 	})
