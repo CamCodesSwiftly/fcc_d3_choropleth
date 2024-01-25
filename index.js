@@ -49,36 +49,7 @@ fetch(
 		// This link will lead to the solution:
 		// https://observablehq.com/@d3/choropleth/2?intent=fork
 
-		//lets plot
-		const plot = Plot.plot({
-			projection: "identity",
-			width: 975,
-			height: 610,
-			color: {
-				type: "quantize",
-				n: 8,
-				domain: [1, 80],
-				scheme: "blues",
-				label: "Education (%)",
-				legend: true,
-			},
-			marks: [
-				Plot.geo(countiesGJSON, {
-					fill: (d) => d.properties.bachelorsOrHigher,
-					title: (d) =>
-						`${d.properties.area_name}, ${d.properties.state}: ${d.properties.bachelorsOrHigher}`,
-				}),
-				Plot.geo(
-					topojson.mesh(
-						usTJSON,
-						usTJSON.objects.states,
-						(a, b) => a !== b
-					),
-					{ stroke: "white" }
-				),
-			],
-		});
-		body.append(plot);
+
 	})
 	.catch((error) => {
 		// Handle errors
