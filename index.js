@@ -1,10 +1,8 @@
+// * BASIC SETUP
 let l = function () {
 	console.log.apply(console, arguments);
 };
-
-import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
 const body = document.querySelector("body");
-
 let educationData = [];
 
 fetch(
@@ -22,7 +20,8 @@ fetch(
 	})
 	.then((response) => response.json())
 	.then((usTJSON) => {
-		// Continue with your code...
+
+	// * DATA HANDLING
 		// TOPOJSON DATA
 		const countiesTJSON = usTJSON.objects.counties;
 		const statesTJSON = usTJSON.objects.states;
@@ -42,25 +41,31 @@ fetch(
 			//Merge
 			countyElement.properties = correspondingElement;
 		}
-		console.log(countiesGJSON);
 
-		for (let i = 0; i < 10; i++) {}
 
+// * PLOTTING
 		// This link will lead to the solution:
 		// https://observablehq.com/@d3/choropleth/2?intent=fork
-		// SETUP
+	// * SETUP
 		const color = d3.scaleQuantize([1, 10], d3.schemeBlues[9]);
 		const path = d3.geoPath();
 		const format = (d) => `${d}%`;
 		// const valuemap = new Map(data.map(d => [d.id, d.rate]));
-
-		//CREATE THE SVG
+	// TODO: Prepare Data
+	
+	// * CREATE SVG	
 		const svg = d3
 			.create("svg")
 			.attr("width", 975)
 			.attr("height", 610)
 			.attr("viewBox", [0, 0, 975, 610])
 			.attr("style", "max-width: 100%; height: auto;");
+
+	// TODO: Legend
+	
+	// TODO: Plot counties and tooltip
+
+	// TODO: Plot statemesh
 	})
 	.catch((error) => {
 		// Handle errors
