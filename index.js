@@ -48,8 +48,19 @@ fetch(
 
 		// This link will lead to the solution:
 		// https://observablehq.com/@d3/choropleth/2?intent=fork
+		// SETUP
+		const color = d3.scaleQuantize([1, 10], d3.schemeBlues[9]);
+		const path = d3.geoPath();
+		const format = (d) => `${d}%`;
+		// const valuemap = new Map(data.map(d => [d.id, d.rate]));
 
-
+		//CREATE THE SVG
+		const svg = d3
+			.create("svg")
+			.attr("width", 975)
+			.attr("height", 610)
+			.attr("viewBox", [0, 0, 975, 610])
+			.attr("style", "max-width: 100%; height: auto;");
 	})
 	.catch((error) => {
 		// Handle errors
