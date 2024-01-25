@@ -1,7 +1,5 @@
 // * BASIC SETUP
-let l = function () {
-	console.log.apply(console, arguments);
-};
+const d3 = require("d3");
 const body = document.querySelector("body");
 let educationData = [];
 
@@ -20,8 +18,7 @@ fetch(
 	})
 	.then((response) => response.json())
 	.then((usTJSON) => {
-
-	// * DATA HANDLING
+		// * DATA HANDLING
 		// TOPOJSON DATA
 		const countiesTJSON = usTJSON.objects.counties;
 		const statesTJSON = usTJSON.objects.states;
@@ -42,18 +39,19 @@ fetch(
 			countyElement.properties = correspondingElement;
 		}
 
-
-// * PLOTTING
+		// * PLOTTING
 		// This link will lead to the solution:
 		// https://observablehq.com/@d3/choropleth/2?intent=fork
-	// * SETUP
+		// * SETUP
 		const color = d3.scaleQuantize([1, 10], d3.schemeBlues[9]);
 		const path = d3.geoPath();
 		const format = (d) => `${d}%`;
-		// const valuemap = new Map(data.map(d => [d.id, d.rate]));
-	// TODO: Prepare Data
-	
-	// * CREATE SVG	
+		const valuemap = new Map(
+			educationData.map((d) => [d.fips, d.bachelorsOrHigher])
+		);
+		// TODO: Prepare Data
+
+		// * CREATE SVG
 		const svg = d3
 			.create("svg")
 			.attr("width", 975)
@@ -61,11 +59,13 @@ fetch(
 			.attr("viewBox", [0, 0, 975, 610])
 			.attr("style", "max-width: 100%; height: auto;");
 
-	// TODO: Legend
-	
-	// TODO: Plot counties and tooltip
+		// TODO: Legend
 
-	// TODO: Plot statemesh
+		// TODO: Plot counties and tooltip
+
+		// TODO: Plot statemesh
+
+		// ? CONSOLE LOG AREA
 	})
 	.catch((error) => {
 		// Handle errors
