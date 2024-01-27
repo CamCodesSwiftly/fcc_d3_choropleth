@@ -266,18 +266,24 @@ fetch(
 			.data(countiesGJSON)
 			.append("div")
 			.attr("id", "tooltip");
-		function handleMouseOver() {
-			const text = `${d3.select(this).attr("data-education")}`;
+		function handleMouseOver(event, d) {
+			const attributeText = `${d3.select(this).attr("data-education")}`;
+			const visibleText = `${d3.select(this).attr("data-county")}. ${d3
+				.select(this)
+				.attr("data-state")}: ${d3
+				.select(this)
+				.attr("data-education")}`;
+			const [x, y] = d3.pointer(event);
 			tooltip
-				.transition()
-				.duration(200)
-				.style("opacity", 0.9)
-				.attr("data-education", text);
-			return tooltip.html(`<p>${text}</p>`);
+				.style("left", x + 0 + "px")
+				.style("top", y + 0 + "px")
+				.style("opacity", 0.8)
+				.style("visibility", "visible")
+				.attr("data-education", attributeText);
+			return tooltip.html(`<p>${visibleText}</p>`);
 		}
 		function handleMouseOut() {
-			tooltip.transition().duration(200).style("opacity", 0);
-			d3.select(this).style("stroke", "black").style("stroke-width", 0);
+			tooltip.style("opacity", 0).style("visibility", "hidden");
 		}
 		// * Plot counties and tooltip
 		svg.append("g")
