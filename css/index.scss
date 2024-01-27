@@ -11,27 +11,6 @@ h2 {
 	text-align: center;
 }
 
-#test {
-	width: 50px;
-	height: 50px;
-	background-color: $primary-color;
-}
-#test-lighter {
-	width: 50px;
-	height: 50px;
-	background-color: lighten($primary-color, 5%);
-}
-#test-evenlighter {
-	width: 50px;
-	height: 50px;
-	background-color: lighten($primary-color, 10%);
-}
-#test-lightest {
-	width: 50px;
-	height: 50px;
-	background-color: lighten($primary-color, 20%);
-}
-
 #tooltip {
 	position: absolute;
 	/* visibility: hidden; */

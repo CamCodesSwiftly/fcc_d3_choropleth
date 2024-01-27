@@ -18,3 +18,8 @@ h2 {
   padding: 0px 10px;
   font-size: 12px;
 }/*# sourceMappingURL=index.css.map */
+
+svg {
+  display: flex;
+  justify-content: center;
+}
