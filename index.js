@@ -234,7 +234,7 @@ fetch(
 		// This link will lead to the solution:
 		// https://observablehq.com/@d3/choropleth/2?intent=fork
 		// * SETUP
-		const color = d3.scaleQuantize([1, 10], d3.schemeBlues[9]);
+		const color = d3.scaleQuantize([3, 66], d3.schemeBlues[7]);
 		const path = d3.geoPath();
 		const format = (d) => `${d}%`;
 		const valuemap = new Map(
@@ -251,13 +251,13 @@ fetch(
 			.attr("viewBox", [0, 0, 975, 610])
 			.attr("style", "max-width: 100%; height: auto;");
 
-		// TODO: Legend
+		// * Legend
 		svg.append("g")
 			.attr("transform", "translate(610,20)")
 			.append(() =>
 				Legend(color, { title: "Education rate (%)", width: 260 })
 			);
-		// TODO: Plot counties and tooltip
+		// * Plot counties and tooltip
 		svg.append("g")
 			.selectAll("path")
 			.data(countiesGJSON)
@@ -265,12 +265,12 @@ fetch(
 			.attr("fill", (d) => color(d.properties.bachelorsOrHigher))
 			.attr("d", path)
 			.append("title")
-			// ! Tooltips are not working
+			// TODO: Tooltips
 			.text(
 				(d) =>
 					`${d.properties.area_name}, ${d.properties.state}, ${d.properties.bachelorsOrHigher}%`
 			);
-		// TODO: Plot statemesh
+		// Plot statemesh
 		svg.append("path")
 			.datum(topojson.mesh(usTJSON, usTJSON.objects.states, (a, b) => a !== b))
 			.attr("fill", "none")
@@ -278,7 +278,7 @@ fetch(
 			.attr("stroke-linejoin", "round")
 			.attr("d", path);
 
-			
+
 		// ? CONSOLE LOG AREA
 		console.log(countiesGJSON[32]);
 	})
