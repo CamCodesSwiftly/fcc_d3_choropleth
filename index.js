@@ -160,6 +160,7 @@ function Legend(
 
 	svg.append("g")
 		.attr("transform", `translate(0,${height - marginBottom})`)
+		// .attr("id", "legend")
 		.call(
 			d3
 				.axisBottom(x)
@@ -254,6 +255,7 @@ fetch(
 		// * Legend
 		svg.append("g")
 			.attr("transform", "translate(610,20)")
+			.attr("id", "legend")
 			.append(() =>
 				Legend(color, { title: "Education rate (%)", width: 260 })
 			);
