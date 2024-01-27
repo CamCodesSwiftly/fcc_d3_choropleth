@@ -257,11 +257,18 @@ fetch(
 			.append(() =>
 				Legend(color, { title: "Education rate (%)", width: 260 })
 			);
+
+		// TODO: Tooltips
+
 		// * Plot counties and tooltip
 		svg.append("g")
 			.selectAll("path")
 			.data(countiesGJSON)
 			.join("path")
+			.attr("class", "county")
+			.attr("county", (d) => d)
+			.attr("data-fips", (d) => d.properties.fips)
+			.attr("data-education", (d) => d.properties.bachelorsOrHigher)
 			.attr("fill", (d) => color(d.properties.bachelorsOrHigher))
 			.attr("d", path)
 			.append("title")
@@ -272,12 +279,17 @@ fetch(
 			);
 		// Plot statemesh
 		svg.append("path")
-			.datum(topojson.mesh(usTJSON, usTJSON.objects.states, (a, b) => a !== b))
+			.datum(
+				topojson.mesh(
+					usTJSON,
+					usTJSON.objects.states,
+					(a, b) => a !== b
+				)
+			)
 			.attr("fill", "none")
 			.attr("stroke", "white")
 			.attr("stroke-linejoin", "round")
 			.attr("d", path);
-
 
 		// ? CONSOLE LOG AREA
 		console.log(countiesGJSON[32]);

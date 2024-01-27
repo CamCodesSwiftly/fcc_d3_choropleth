@@ -31,3 +31,9 @@ h2 {
 	height: 50px;
 	background-color: lighten($primary-color, 20%);
 }
+
+.custom-tooltip {
+	font-size: 12px;
+	fill: white;
+	text-anchor: middle;
+}
