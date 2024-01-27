@@ -241,7 +241,6 @@ fetch(
 		const valuemap = new Map(
 			educationData.map((d) => [d.fips, d.bachelorsOrHigher])
 		);
-		// TODO: Prepare Data
 
 		// * CREATE SVG
 		const svg = d3
@@ -261,7 +260,25 @@ fetch(
 			);
 
 		// TODO: Tooltips
-
+		// * TOOLTIP
+		let tooltip = d3
+			.select("body")
+			.data(countiesGJSON)
+			.append("div")
+			.attr("id", "tooltip");
+		function handleMouseOver() {
+			const text = `${d3.select(this).attr("data-education")}`;
+			tooltip
+				.transition()
+				.duration(200)
+				.style("opacity", 0.9)
+				.attr("data-education", text);
+			return tooltip.html(`<p>${text}</p>`);
+		}
+		function handleMouseOut() {
+			tooltip.transition().duration(200).style("opacity", 0);
+			d3.select(this).style("stroke", "black").style("stroke-width", 0);
+		}
 		// * Plot counties and tooltip
 		svg.append("g")
 			.selectAll("path")
@@ -271,14 +288,13 @@ fetch(
 			.attr("county", (d) => d)
 			.attr("data-fips", (d) => d.properties.fips)
 			.attr("data-education", (d) => d.properties.bachelorsOrHigher)
+			.attr("data-state", (d) => d.properties.state)
+			.attr("data-county", (d) => d.properties.area_name)
 			.attr("fill", (d) => color(d.properties.bachelorsOrHigher))
 			.attr("d", path)
-			.append("title")
-			// TODO: Tooltips
-			.text(
-				(d) =>
-					`${d.properties.area_name}, ${d.properties.state}, ${d.properties.bachelorsOrHigher}%`
-			);
+			.on("mouseover", handleMouseOver)
+			.on("mouseout", handleMouseOut);
+
 		// Plot statemesh
 		svg.append("path")
 			.datum(

@@ -32,8 +32,12 @@ h2 {
 	background-color: lighten($primary-color, 20%);
 }
 
-.custom-tooltip {
-	font-size: 12px;
-	fill: white;
-	text-anchor: middle;
+#tooltip {
+	position: absolute;
+	/* visibility: hidden; */
+	background-color: white ;
+	opacity: 0;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+	border-radius: 3px;
+	padding: 10px;
 }
